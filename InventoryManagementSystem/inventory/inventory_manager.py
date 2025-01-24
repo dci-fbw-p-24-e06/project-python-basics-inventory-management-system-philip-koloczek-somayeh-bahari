@@ -11,9 +11,9 @@ def readProducts():
     return products
 readProducts()
 
-def wirteProducts():
+def wirteProducts(products):
     with open("products.json", 'w') as file:
-        json.dump(products,file)
+        json.dump(products,file, indent=4)
     print(products)
 
 def inventory():
@@ -26,7 +26,7 @@ def inventory():
     5. Retrieve information about a product.
     6. Calculate the total value of all products in the inventory.
     """
- 
+    products = readProducts()
 
     # loop to interact with the user
     while True:
@@ -41,7 +41,7 @@ def inventory():
         
         # get the user's choice
         choice = input("Enter your choice (1-7): ")
-        readProducts()
+        #readProducts()
 
         if choice == "1":
             #  Add Product
@@ -112,10 +112,10 @@ def inventory():
         else:
             print("Invalid choice! Please try again.")
 
-        wirteProducts()
+        wirteProducts(products)
 
 
 
 
 inventory()
-print(readProducts())
+#print(readProducts())
