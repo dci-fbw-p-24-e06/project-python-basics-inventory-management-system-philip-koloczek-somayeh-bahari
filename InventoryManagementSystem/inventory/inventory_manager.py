@@ -11,7 +11,7 @@ def readProducts():
     return products
 readProducts()
 
-def wirteProducts(products):
+def writeProducts(products):
     with open("products.json", 'w') as file:
         json.dump(products,file, indent=4)
     print(products)
@@ -112,7 +112,7 @@ def inventory():
         else:
             print("Invalid choice! Please try again.")
 
-        wirteProducts(products)
+        writeProducts(products)
 
 
 
