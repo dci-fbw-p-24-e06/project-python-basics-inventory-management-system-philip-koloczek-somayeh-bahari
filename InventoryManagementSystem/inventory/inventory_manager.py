@@ -1,7 +1,20 @@
 
 
 # products dictionary
-products = {}
+#from product import products
+import json 
+
+
+def readProducts():
+    with open("products.json", 'r') as file:
+        products = json.load(file)
+    return products
+readProducts()
+
+def wirteProducts():
+    with open("products.json", 'w') as file:
+        json.dump(products,file)
+    print(products)
 
 def inventory():
     """
@@ -28,6 +41,7 @@ def inventory():
         
         # get the user's choice
         choice = input("Enter your choice (1-7): ")
+        readProducts()
 
         if choice == "1":
             #  Add Product
@@ -35,7 +49,8 @@ def inventory():
             name = input("Enter product name: ")
             price = float(input("Enter product price: "))
             quantity = int(input("Enter product quantity: "))
-            products[product_id] = {"name": name, "price": price, "quantity": quantity}
+            #products.update(product_id)
+            products.update({product_id : {"name": name, "price": price, "quantity": quantity}})
             print(f"Product {name} added successfully!")
 
         elif choice == "2":
@@ -97,7 +112,10 @@ def inventory():
         else:
             print("Invalid choice! Please try again.")
 
+        wirteProducts()
+
+
 
 
 inventory()
-print(products)
+print(readProducts())
