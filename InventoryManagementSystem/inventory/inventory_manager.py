@@ -6,13 +6,13 @@ import json
 
 
 def readProducts():
-    with open("products.json", 'r') as file:
+    with open("InventoryManagementSystem/inventory/products.json", 'r') as file:
         products = json.load(file)
     return products
 readProducts()
 
 def writeProducts(products):
-    with open("products.json", 'w') as file:
+    with open("InventoryManagementSystem/inventory/products.json", 'w') as file:
         json.dump(products,file, indent=4)
     print(products)
 
@@ -117,5 +117,5 @@ def inventory():
 
 
 
-inventory()
+#inventory()
 #print(readProducts())

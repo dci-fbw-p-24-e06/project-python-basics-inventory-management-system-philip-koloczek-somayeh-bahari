@@ -13,5 +13,15 @@
         "name": "ggg",
         "price": 234.0,
         "quantity": 12
+    },
+    "654": {
+        "name": "lkk",
+        "price": 87.0,
+        "quantity": 9
+    },
+    "100": {
+        "name": "uz",
+        "price": 111.0,
+        "quantity": 87
     }
 }
