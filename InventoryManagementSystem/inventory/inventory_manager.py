@@ -137,7 +137,8 @@ class InventoryManager:
     def get_product_info(self, product_name):
         if product_name in self.products:
             return self.products[product_name].get_product_info()
-        return "Product not found"
+        else:
+                return "Product not found"
 
     def get_total_inventory_value(self):
         total_value = 0
