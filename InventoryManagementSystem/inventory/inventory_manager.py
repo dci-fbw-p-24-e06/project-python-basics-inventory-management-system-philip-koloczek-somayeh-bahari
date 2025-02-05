@@ -117,9 +117,63 @@
 # #inventory()
 # #print(readProducts())
 
-#from product import *
+from .product import Product
+
 
 class InventoryManager:
+    def __init__(self):
+        self.products = {}
+
+    def add_product(self):
+        product_name = input("Input new product name: ")
+        if product_name not in self.products:
+            product_price = int(input("Input product price: $"))
+            product_quantity = int(input("Input quantity: "))        
+            self.products[product_name] = Product(product_price, product_quantity)
+            print("Product added")
+        else:
+            print("\n"* 3) 
+            print("Product name already in use. Process aborted.\n")
+        
+    def remove_product(self, product_name):
+        if product_name in self.products:
+            del self.products[product_name]
+
+    def update_product_quantity(self):
+        p_name = input("Insert product name?: ")
+        n_quant = int(input("Insert new quantity: "))
+        if p_name in self.products:
+            self.products[p_name].update_quantity(n_quant)
+
+    def update_price(self):
+        p_name = input("Insert product name: ")
+        n_price = int(input("Insert new price: $"))
+        if p_name in self.products:
+            self.products[p_name].update_price(n_price)
+
+    def product_info(self):
+        user_choice = input("Which product name?: ")
+        if user_choice in self.products:
+            print(f"Product name: {user_choice} {self.products[user_choice].get_product_info()}")
+        else:
+            print("Product not found")
+    
+    def show_all_products(self):
+        if self.products:
+            for product in self.products:
+                print(f"Product name: {product} {self.products[product].get_product_info()}")
+        else:
+            print("No products in inventory\n")
+
+
+    def get_total_inventory_value(self):
+        total_value = 0
+        for product in self.products:
+            total_value += self.products[product].get_value()
+        print(f"The total value of your products is: ${total_value}.")
+
+
+""" class InventoryManager:
     def __init__(self):
         self.products = {}
 
@@ -144,4 +198,5 @@ class InventoryManager:
         total_value = 0
         for product in self.products.values():
             total_value += product.price * product.quantity
-        return total_value
+        return total_value """
+
