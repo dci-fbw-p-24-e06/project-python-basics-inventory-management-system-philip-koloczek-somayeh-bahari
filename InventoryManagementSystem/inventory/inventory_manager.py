@@ -123,6 +123,7 @@ import json
 class InventoryManager:
     def __init__(self):
         self.products = {}
+        self.load_changes()
 
     def add_product(self):
         product_name = input("Input new product name: ")
@@ -131,6 +132,7 @@ class InventoryManager:
             product_quantity = int(input("Input quantity: "))        
             self.products[product_name] = Product(product_price, product_quantity)
             print(">>> Product added")
+            self.save_changes() # add to list after adding
         else:
             print(">>> Product name already in use. Process aborted.\n")
         
@@ -138,6 +140,7 @@ class InventoryManager:
         p_name = input("Input product to remove: ")
         if p_name in self.products:
             del self.products[p_name]
+            self.save_changes() # save change 
             print(f">>> {p_name} removed from product list\n")
         else:
             print(f">>>{p_name} not in database. Process aborted.\n")
@@ -147,6 +150,7 @@ class InventoryManager:
         n_quant = int(input(f"Current quantity: {self.products[p_name].quantity}. Insert new quantity: "))
         if p_name in self.products:
             self.products[p_name].update_quantity(n_quant)
+            self.save_changes() #save update
             print(f">>> Quantity of {p_name} updated to {n_quant}.\n")
         else:
             print(f">>> {p_name} not in database. Process aborted.\n")
@@ -156,6 +160,7 @@ class InventoryManager:
         n_price = int(input(f"Current price: ${self.products[p_name].price}. Insert new price: $"))
         if p_name in self.products:
             self.products[p_name].update_price(n_price)
+            self.save_changes() # save update price
             print(f">>> Price of {p_name} updated to {n_price}.\n")
         else:
             print(f">>> {p_name} not in database. Process aborted.\n")
@@ -185,14 +190,44 @@ class InventoryManager:
             n += 1
         print(f"\nYou have {n} products in your database with a total value of: ${total_value}.\n")
 
-    def save_changes(self):
-        with open("inventory.products.json", "w") as database:
-            json.dump(self.products, database, indent=4)
+    # def save_changes(self):
+    #     with open("inventory.products.json", "w") as database:
+    #         json.dump(self.products, database, indent=4)
     
-    def load_changes(self):
-        with open("products.json", "w") as database:
-            json.dump(self.products, database, indent=4)
+    def save_changes(self):
+        try:
+            with open("InventoryManagementSystem/inventory/product.py", "w") as database:
+                json.dump(self.products, database, default=str, indent=4)
+                print(">>> Changes saved successfully.")
 
+        except Exception as e:
+            print(f"Error saving changes: {e}")
+        
+        #     for product_name, product in self.products.items():
+        #         data[product_name] = {'price': product.price, 'quantity': product.quantity}
+        # json.dump(data, database, indent=4)
+        # print(">>> Changes saved to file.")
+
+    # def load_changes(self):
+    #     try:
+    #         with open("products.json", "w") as database:
+    #             json.dump(self.products, database, indent=4)
+
+    def load_changes(self):
+        try:
+            with open("InventoryManagementSystem/inventory/product.py", "r") as database:
+                self.product = json.load(database)
+            
+            # for product_name, details in data.items():
+            #     self.products[product_name] = Product(details['price'], details['quantity'])
+            print(">>> Products loaded successfully from file.")
+        except FileNotFoundError:
+            print(">>> No saved products found. Starting fresh.")
+
+        except json.JSONDecodeError:
+            print(">>> Error loading inventory data. The file may be corrupted.")
+        except Exception as e:
+            print(f"Error loading inventory: {e}")
 
 """ class InventoryManager:
     def __init__(self):
