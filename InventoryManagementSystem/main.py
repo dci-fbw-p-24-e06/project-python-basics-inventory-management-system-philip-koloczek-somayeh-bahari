@@ -6,10 +6,11 @@ iv = InventoryManager()
 run = True
 
 def menu():
+    """Main menu for the Inventory Management. Gets user input and forwards it to InventoryManager class."""
     print("What do you want to do?")
-    print("1. Add new product\n2. Remove an existing product\n3. Update the quantity of a product\n4. Update the price of a product\n5. Get info for a product\n6. Show total product value\n7. Show all products")
+    print("1. Add new product\n2. Remove an existing product\n3. Update the quantity of a product\n4. Update the price of a product\n5. Get info for a product\n6. Show total product value\n7. Show all products\n8. Save changes to database\n0. Exit")
     user_input = int(input("Your choice: "))
-    if user_input not in range(0,9):
+    if user_input not in range(0,11):
         print("Input out of range. Try again\n")
         menu()
     if user_input == 1:
@@ -29,8 +30,12 @@ def menu():
     elif user_input == 8:
         iv.save_changes()
     elif user_input == 0:
+        if input("Save changes before exit? (Y/N): ").lower() == "y":
+            iv.save_changes()
+        print("Exiting program. See you next time.")
         global run
         run = False
 
+iv.load_changes()
 while run:
     menu()
