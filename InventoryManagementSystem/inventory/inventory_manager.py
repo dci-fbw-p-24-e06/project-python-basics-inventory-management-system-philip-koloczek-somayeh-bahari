@@ -118,7 +118,7 @@
 # #print(readProducts())
 
 from .product import Product
-
+import json
 
 class InventoryManager:
     def __init__(self):
@@ -130,47 +130,68 @@ class InventoryManager:
             product_price = int(input("Input product price: $"))
             product_quantity = int(input("Input quantity: "))        
             self.products[product_name] = Product(product_price, product_quantity)
-            print("Product added")
+            print(">>> Product added")
         else:
-            print("\n"* 3) 
-            print("Product name already in use. Process aborted.\n")
+            print(">>> Product name already in use. Process aborted.\n")
         
-    def remove_product(self, product_name):
-        if product_name in self.products:
-            del self.products[product_name]
+    def remove_product(self):
+        p_name = input("Input product to remove: ")
+        if p_name in self.products:
+            del self.products[p_name]
+            print(f">>> {p_name} removed from product list\n")
+        else:
+            print(f">>>{p_name} not in database. Process aborted.\n")
 
     def update_product_quantity(self):
         p_name = input("Insert product name?: ")
-        n_quant = int(input("Insert new quantity: "))
+        n_quant = int(input(f"Current quantity: {self.products[p_name].quantity}. Insert new quantity: "))
         if p_name in self.products:
             self.products[p_name].update_quantity(n_quant)
+            print(f">>> Quantity of {p_name} updated to {n_quant}.\n")
+        else:
+            print(f">>> {p_name} not in database. Process aborted.\n")
 
     def update_price(self):
         p_name = input("Insert product name: ")
-        n_price = int(input("Insert new price: $"))
+        n_price = int(input(f"Current price: ${self.products[p_name].price}. Insert new price: $"))
         if p_name in self.products:
             self.products[p_name].update_price(n_price)
+            print(f">>> Price of {p_name} updated to {n_price}.\n")
+        else:
+            print(f">>> {p_name} not in database. Process aborted.\n")
 
     def product_info(self):
-        user_choice = input("Which product name?: ")
+        user_choice = input("Insert product name: ")
         if user_choice in self.products:
-            print(f"Product name: {user_choice} {self.products[user_choice].get_product_info()}")
+            print(f"\nProduct name: {user_choice} {self.products[user_choice].__repr__()}\n")
         else:
-            print("Product not found")
+            print(">>> Product not found.\n")
     
     def show_all_products(self):
+        n = 0
         if self.products:
             for product in self.products:
-                print(f"Product name: {product} {self.products[product].get_product_info()}")
+                n += 1
+                print(f"{n}. Product name: {product} {self.products[product].__repr__()}")
         else:
-            print("No products in inventory\n")
+            print(">>> No products in inventory\n")
 
 
     def get_total_inventory_value(self):
         total_value = 0
+        n = 0
         for product in self.products:
             total_value += self.products[product].get_value()
-        print(f"The total value of your products is: ${total_value}.")
+            n += 1
+        print(f"\nYou have {n} products in your database with a total value of: ${total_value}.\n")
+
+    def save_changes(self):
+        with open("inventory.products.json", "w") as database:
+            json.dump(self.products, database, indent=4)
+    
+    def load_changes(self):
+        with open("products.json", "w") as database:
+            json.dump(self.products, database, indent=4)
 
 
 """ class InventoryManager:

@@ -3,7 +3,12 @@ class Product:
              
         self.price = price        
         self.quantity = quantity
+    def __repr__(self):
+        return f"Price: ${self.price}, Quantity: {self.quantity}, Total Value: ${self.get_value()}"
     
+    def __dict__(self):
+        pass
+
     def update_quantity(self, new_quantity):
         self.quantity = new_quantity  
 
@@ -13,9 +18,7 @@ class Product:
     def get_value(self):
         return self.price * self.quantity      
 
-    def get_product_info(self):
-        
-        return f"Price: ${self.price}, Quantity: {self.quantity}, Total Value: ${self.get_value()}"
+
 
 
 
