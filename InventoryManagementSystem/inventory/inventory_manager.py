@@ -9,8 +9,18 @@ class InventoryManager:
     def add_product(self):
         p_name: str = input("Input new product name: ")
         if p_name not in self.products:
-            p_price: float = float(input("Input product price: $"))
-            p_quantity: int = int(input("Input quantity: "))        
+            p_price = False
+            while not p_price:
+                try:
+                    p_price: float = float(input("Input product price: $"))
+                except ValueError:
+                    print("No valid input. Please use only numbers and the . as separator: $")
+            p_quantity = False
+            while not p_quantity:
+                try:
+                    p_quantity: int = int(input("Input quantity: "))
+                except ValueError:
+                    print("No valid input. Please use only numbers")        
             self.products[p_name] = Product(p_price, p_quantity)
             print(f">>> Product added: {p_name} -> {self.products[p_name].__str__()}")
             #self.save_changes() # add to list after adding
@@ -28,8 +38,13 @@ class InventoryManager:
 
     def update_product_quantity(self):
         p_name = input("Insert product name?: ")
-        n_quant = int(input(f"Current quantity: {self.products[p_name].quantity}. Insert new quantity: "))
         if p_name in self.products:
+            n_quant = False
+            while not n_quant:
+                try:
+                    n_quant = int(input(f"Current quantity: {self.products[p_name].quantity}. Insert new quantity: "))
+                except ValueError:
+                    print("No valid input. Please use only numbers")
             self.products[p_name].update_quantity(n_quant)
             #self.save_changes() #save update
             print(f">>> Quantity of {p_name} updated to {n_quant}.\n")
@@ -38,8 +53,13 @@ class InventoryManager:
 
     def update_price(self):
         p_name = input("Insert product name: ")
-        n_price = int(input(f"Current price: ${self.products[p_name].price}. Insert new price: $"))
         if p_name in self.products:
+            n_price = False
+            while not n_price:
+                try:
+                    n_price = int(input(f"Current price: ${self.products[p_name].price}. Insert new price: $"))
+                except ValueError:
+                    print("No valid input. Please use only numbers and the . as separator: $")
             self.products[p_name].update_price(n_price)
             #self.save_changes() # save update price
             print(f">>> Price of {p_name} updated to {n_price}.\n")
@@ -99,3 +119,4 @@ class InventoryManager:
             print(">>> Error loading inventory data. The file may be corrupted.")
         except Exception as e:
             print(f"Error loading inventory: {e}")
+   
