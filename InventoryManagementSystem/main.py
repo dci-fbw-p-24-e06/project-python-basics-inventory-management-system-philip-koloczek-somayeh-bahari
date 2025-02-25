@@ -1,20 +1,30 @@
 from inventory.inventory_manager import InventoryManager
 
-
 iv = InventoryManager()
-
 run = True
 
+
 def menu():
-    """Main menu for the Inventory Management. Gets user input and forwards it to InventoryManager class."""
+    """Main menu for the Inventory Management.
+    Gets user input and forwards it to InventoryManager class."""
     print("What do you want to do?")
-    print("1. Add new product\n2. Remove an existing product\n3. Update the quantity of a product\n4. Update the price of a product\n5. Get info for a product\n6. Show total product value\n7. Show all products\n8. Save changes to database\n0. Exit")
+    print(
+        "1. Add new product\n"
+        "2. Remove an existing product\n"
+        "3. Update the quantity of a product\n"
+        "4. Update the price of a product\n"
+        "5. Get info for a product\n"
+        "6. Show total product value\n"
+        "7. Show all products\n"
+        "8. Save changes to database\n"
+        "0. Exit"
+    )
     try:
         user_input = int(input("Your choice: "))
     except ValueError:
         print(">>>Input out of range. Try again<<<\n")
     else:
-        if user_input not in range(0,9):
+        if user_input not in range(0, 9):
             print("Input out of range. Try again\n")
         elif user_input == 1:
             iv.add_product()
@@ -38,6 +48,7 @@ def menu():
             print("Exiting program. See you next time.")
             global run
             run = False
+
 
 iv.load_changes()
 while run:
