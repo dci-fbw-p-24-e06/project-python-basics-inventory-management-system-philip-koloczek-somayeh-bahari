@@ -1,14 +1,10 @@
 {
-    "jacke": {
-        "price": 345,
-        "quantity": 3
-    },
-    "tasche": {
-        "price": 23.0,
-        "quantity": 22
-    },
     "jeans": {
         "price": 45.0,
         "quantity": 33
+    },
+    "bag": {
+        "price": 23,
+        "quantity": 23
     }
 }

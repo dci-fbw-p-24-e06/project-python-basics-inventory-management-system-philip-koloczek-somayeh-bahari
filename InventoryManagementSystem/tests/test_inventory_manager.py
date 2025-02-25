@@ -44,7 +44,7 @@ class TestInventoryManager(unittest.TestCase):
         iv.products["hose"] = Product(34, 23)
         iv.update_price()
 
-        self.assertEqual(iv.products["hose"].quantity, 50)
+        self.assertEqual(iv.products["hose"].price, 50)
         print(">>> Test for updating product price passed.")
 
     def test_get_total_inventory_value(self):
